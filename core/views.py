@@ -2,7 +2,6 @@ from django.shortcuts import redirect, render
 from django.contrib import messages
 import requests
 
-
 def index(request):
     if request.method == 'POST':
         get_cep = request.POST.get('cep')
@@ -11,7 +10,6 @@ def index(request):
         else:
             address = requests.get(f'https://viacep.com.br/ws/{get_cep}/json/')
             address = address.json()
-
         
         if not 'erro' in address:
             context = {
@@ -23,11 +21,11 @@ def index(request):
                 'ibge': address['ibge'],
                 'ddd': address['ddd'],
             }
+
         else:
             messages.error(request, 'CEP inválido!')
             return redirect ('/')
 
         return render(request, 'index.html', context)
-
     else:
         return render(request, 'index.html')
