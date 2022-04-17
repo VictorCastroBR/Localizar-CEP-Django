@@ -30,7 +30,7 @@ def index(request):
           
           else:
               messages.error(request, 'CEP inválido!')
-              
+              return redirect ('/')
 
           return render(request, 'index.html', context)
     else:
